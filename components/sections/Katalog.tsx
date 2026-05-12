@@ -66,10 +66,12 @@ export default function Katalog({ config }: Props) {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="menumuz"
-      className="relative overflow-hidden"
+    <>
+      {/* DESKTOP VIEW */}
+      <section
+        ref={sectionRef}
+        id="menumuz"
+        className="relative overflow-hidden hidden md:block"
       style={{
         height: "140vh",
         background: "var(--color-primary)",
@@ -242,6 +244,88 @@ export default function Katalog({ config }: Props) {
           to { transform: translateX(-50%); }
         }
       `}</style>
-    </section>
+      </section>
+
+      {/* MOBILE VIEW */}
+      <section
+        id="menumuz-mobile"
+        className="md:hidden flex flex-col pt-24 pb-12 px-6 relative"
+        style={{ background: "var(--color-primary)" }}
+      >
+        <div className="text-center mb-12">
+          <p
+            className="text-xs tracking-[0.4em] mb-4"
+            style={{ fontFamily: "var(--font-inter)", color: "rgba(236,237,223,0.7)" }}
+          >
+            {config.eyebrow}
+          </p>
+          <h2
+            style={{
+              fontFamily: "var(--font-fraunces)",
+              fontSize: "clamp(3rem, 12vw, 4rem)",
+              lineHeight: 1.0,
+              color: "var(--color-light)",
+            }}
+          >
+            {config.anaYazi.replace(config.vurguKelime, "")}
+            <br />
+            <em style={{ color: "var(--color-accent)" }}>{config.vurguKelime}</em>
+          </h2>
+          <p
+            className="mt-6 text-sm italic px-4"
+            style={{
+              fontFamily: "var(--font-inter)",
+              fontWeight: 300,
+              color: "rgba(236,237,223,0.7)",
+              letterSpacing: "0.1em",
+              lineHeight: 1.6,
+            }}
+          >
+            {config.altMetin}
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-6 mb-12">
+          <div className="w-full aspect-[4/5] relative rounded-2xl overflow-hidden shadow-2xl">
+            {config.gorsel1.endsWith(".mp4") ? (
+              <video src={config.gorsel1} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            ) : (
+              <Image src={config.gorsel1} alt="Katalog 1" fill className="object-cover" />
+            )}
+          </div>
+          
+          <div className="w-full aspect-square relative rounded-2xl overflow-hidden shadow-2xl">
+            {Array.isArray(config.video2) ? (
+              <div className="w-full h-full relative">
+                {config.video2.map((src, fi) => (
+                  <div key={src} className="absolute inset-0" style={{ opacity: fi === loopFrame ? 1 : 0, transition: "opacity 0.4s" }}>
+                    <Image src={src} alt="" fill className="object-cover" />
+                  </div>
+                ))}
+              </div>
+            ) : config.video2.endsWith(".mp4") ? (
+              <video src={config.video2} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            ) : (
+              <Image src={config.video2 as string} alt="Katalog 2" fill className="object-cover" />
+            )}
+          </div>
+
+          <div className="w-full aspect-[4/3] relative rounded-2xl overflow-hidden shadow-2xl">
+            {config.gorsel3.endsWith(".mp4") ? (
+              <video src={config.gorsel3} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+            ) : (
+              <Image src={config.gorsel3} alt="Katalog 3" fill className="object-cover" />
+            )}
+          </div>
+        </div>
+
+        <div className="w-full overflow-hidden py-4 -mx-6 px-6" style={{ borderTop: "1px solid rgba(236,237,223,0.1)", width: "calc(100% + 3rem)" }}>
+          <div className="flex whitespace-nowrap" style={{ animation: "marquee 20s linear infinite" }}>
+            <span className="text-xs tracking-[0.3em] uppercase pr-8" style={{ fontFamily: "var(--font-inter)", color: "rgba(236,237,223,0.5)" }}>{config.marqueeMetin}</span>
+            <span className="text-xs tracking-[0.3em] uppercase pr-8" style={{ fontFamily: "var(--font-inter)", color: "rgba(236,237,223,0.5)" }}>{config.marqueeMetin}</span>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

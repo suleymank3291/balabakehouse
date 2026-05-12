@@ -60,11 +60,13 @@ export default function MusteriYorumlari({ yorumlar }: Props) {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative"
-      style={{ height: "800vh" }} // Dev mesafe: Yavaş ve tane tane akış için
-    >
+    <>
+      {/* DESKTOP VIEW */}
+      <section
+        ref={sectionRef}
+        className="relative hidden md:block"
+        style={{ height: "800vh" }} // Dev mesafe: Yavaş ve tane tane akış için
+      >
       <div 
         className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-[var(--color-light)] z-50"
       >
@@ -156,7 +158,34 @@ export default function MusteriYorumlari({ yorumlar }: Props) {
           </a>
         </div>
       </div>
-    </section>
+      </section>
+
+      {/* MOBILE VIEW */}
+      <section className="md:hidden py-24 px-6 relative" style={{ background: "var(--color-light)" }}>
+        <div className="text-center mb-16">
+          <p className="text-[10px] tracking-[0.4em] uppercase mb-4 text-[var(--color-brown)]">MİSAFİRLERİMİZDEN</p>
+          <h2 className="font-serif text-4xl text-[var(--color-text)]">Bala&apos;da bir gün.</h2>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {yorumlar.slice(0, 6).map((yorum, i) => (
+            <div key={i} className="w-full">
+              <MiniYorumKarti yorum={yorum} />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <p className="font-serif italic text-[var(--color-muted)] mb-6 text-lg">Sen de paylaş.</p>
+          <a 
+            href="#" 
+            className="px-8 py-4 rounded-full bg-[var(--color-primary)] text-white text-xs tracking-widest uppercase shadow-xl"
+          >
+            Google&apos;da Yorum Yaz
+          </a>
+        </div>
+      </section>
+    </>
   );
 }
 
